@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grocery Store</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+</head>
+<body>
+    <h1>Grocery Store</h1>
+    <label for="category">Choose Category</label>
+    <select name="category" id="category" onchange="submitCategory()">
+        <option value="1">Dairy</option>
+        <option value="2">Meat</option>
+        <option value="3">Cleaning Products</option>
+        <option value="4">Toiletries</option>
+    </select>
+
+    <script>
+        function submitCategory() {
+            const selectedValue = document.getElementById('category').value;
+            console.log("Selected value:", selectedValue);
+
+            // Send the selected value to the server
+            axios.post('http://127.0.0.1:5000/category', { value: selectedValue })
+                .then(response => {
+                    console.log("Response from server:", response.data);
+                    toastMessage(); // Show the toast message on successful post
+                })
+                .catch(error => {
+                    console.error("Error sending data to server:", error);
+                    toastMessage(); // Show the toast message even if there's an error
+                });
+        }
+
+        function toastMessage(){
+            Toastify({
+                text: "Have fun with your chosen poison 😉",
+                className: "info",
+                style: {
+                    background: "linear-gradient(to right, #00b09b, #96c93d)",
+                }
+            }).showToast();
+        }
+    </script>
+</body>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+</html>
